@@ -44,7 +44,7 @@ nodes:
           ip: "10.200.0.67"
   - hostname: "tpi-2"
     ipAddress: "10.200.0.62"
-    installDisk: "/dev/mmcblk0"
+    installDisk: "/dev/nvme0n1"
     machineSpec:
       secureboot: false
     talosImageURL: factory.talos.dev/installer/df156b82096feda49406ac03aa44e0ace524b7efe4e1f0e144a1e1ae3930f1c0
@@ -61,7 +61,7 @@ nodes:
         mtu: 1500
   - hostname: "tpi-3"
     ipAddress: "10.200.0.63"
-    installDisk: "/dev/mmcblk0"
+    installDisk: "/dev/nvme0n1"
     machineSpec:
       secureboot: false
     talosImageURL: factory.talos.dev/installer/df156b82096feda49406ac03aa44e0ace524b7efe4e1f0e144a1e1ae3930f1c0
@@ -78,7 +78,7 @@ nodes:
         mtu: 1500
   - hostname: "tpi-4"
     ipAddress: "10.200.0.64"
-    installDisk: "/dev/mmcblk0"
+    installDisk: "/dev/nvme0n1"
     machineSpec:
       secureboot: false
     talosImageURL: factory.talos.dev/installer/df156b82096feda49406ac03aa44e0ace524b7efe4e1f0e144a1e1ae3930f1c0
