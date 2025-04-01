@@ -50,6 +50,7 @@ spec:
                 memory: 512Mi
     service:
       main:
+        controller: main
         ports:
           http:
             port: *port
@@ -65,11 +66,13 @@ spec:
                 pathType: Prefix
                 service:
                   name: hedgedoc
-                  port: http
+                  port: 80
     persistence:
       data:
         enabled: true
-        mountPath: /hedgedoc
+        type: pvc
         storageClass: openebs-lvmpv
         accessMode: ReadWriteOnce
-        size: 1Gi 
+        size: 1Gi
+        globalMounts:
+          - path: /hedgedoc 
