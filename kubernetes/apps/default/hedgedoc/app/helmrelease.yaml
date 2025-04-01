@@ -40,8 +40,8 @@ spec:
               CMD_URL_ADDPORT: true
               CMD_ALLOW_ANONYMOUS: true
               CMD_ALLOW_ANONYMOUS_EDITS: true
-              CMD_DB_DIALECT: sqlite
               CMD_DB_STORAGE: /mnt/hedgedoc/db.sqlite
+              CMD_LOGLEVEL: debug
             resources:
               requests:
                 cpu: 15m
