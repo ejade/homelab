@@ -1,0 +1,75 @@
+---
+# yaml-language-server: $schema=https://raw.githubusercontent.com/fluxcd-community/flux2-schemas/main/helmrelease-helm-v2.json
+apiVersion: helm.toolkit.fluxcd.io/v2
+kind: HelmRelease
+metadata:
+  name: hedgedoc
+spec:
+  interval: 30m
+  chart:
+    spec:
+      chart: app-template
+      version: 3.6.1
+      sourceRef:
+        kind: HelmRepository
+        name: bjw-s
+        namespace: flux-system
+  install:
+    remediation:
+      retries: 3
+  upgrade:
+    cleanupOnFail: true
+    remediation:
+      retries: 3
+  dependsOn:
+    - name: cloudflared
+      namespace: network
+  values:
+    controllers:
+      main:
+        strategy: RollingUpdate
+        containers:
+          app:
+            image:
+              repository: quay.io/hedgedoc/hedgedoc
+              tag: 1.10.2
+            env:
+              CMD_DOMAIN: "doc.${SECRET_DOMAIN}"
+              CMD_PROTOCOL_USESSL: true
+              CMD_PORT: &port 3000
+              CMD_URL_ADDPORT: false
+              CMD_ALLOW_ANONYMOUS: true
+              CMD_ALLOW_ANONYMOUS_EDITS: true
+              CMD_DB_DIALECT: sqlite
+              CMD_DB_STORAGE: /hedgedoc/db.sqlite
+            resources:
+              requests:
+                cpu: 15m
+                memory: 128Mi
+              limits:
+                memory: 512Mi
+    service:
+      main:
+        ports:
+          http:
+            port: *port
+    ingress:
+      main:
+        className: external
+        annotations:
+          external-dns.alpha.kubernetes.io/target: "external.${SECRET_DOMAIN}"
+        hosts:
+          - host: "doc.${SECRET_DOMAIN}"
+            paths:
+              - path: /
+                pathType: Prefix
+                service:
+                  name: hedgedoc
+                  port: http
+    persistence:
+      data:
+        enabled: true
+        mountPath: /hedgedoc
+        storageClass: openebs-lvmpv
+        accessMode: ReadWriteOnce
+        size: 1Gi 
