@@ -70,7 +70,7 @@ spec:
     persistence:
       data:
         enabled: true
-        type: pvc
+        type: persistentVolumeClaim
         storageClass: openebs-lvmpv
         accessMode: ReadWriteOnce
         size: 1Gi
