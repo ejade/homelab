@@ -71,7 +71,7 @@ spec:
       data:
         enabled: true
         type: persistentVolumeClaim
-        storageClass: openebs-lvmpv
+        storageClass: openebs-hostpath
         accessMode: ReadWriteOnce
         size: 1Gi
         globalMounts:
