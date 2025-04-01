@@ -37,11 +37,11 @@ spec:
               CMD_DOMAIN: "doc.${SECRET_DOMAIN}"
               CMD_PROTOCOL_USESSL: true
               CMD_PORT: &port 3000
-              CMD_URL_ADDPORT: false
+              CMD_URL_ADDPORT: true
               CMD_ALLOW_ANONYMOUS: true
               CMD_ALLOW_ANONYMOUS_EDITS: true
               CMD_DB_DIALECT: sqlite
-              CMD_DB_STORAGE: /hedgedoc/db.sqlite
+              CMD_DB_STORAGE: /mnt/hedgedoc/db.sqlite
             resources:
               requests:
                 cpu: 15m
@@ -72,7 +72,7 @@ spec:
                 pathType: Prefix
                 service:
                   name: hedgedoc
-                  port: 3000
+                  port: http
     persistence:
       data:
         enabled: true
